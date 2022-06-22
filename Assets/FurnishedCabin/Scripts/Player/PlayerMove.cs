@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private string verticalInputName = "Vertical";
 
     [SerializeField] private float movementSpeed = 2f;
-    [SerializeField] private float mouseSpeed = 4f;
+    bool ischek = true; //프로퍼티로 값 가져오기
 
     private CharacterController charController;
 
@@ -21,13 +21,18 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        PlayerMovement();
+        if(ischek)
+        {
+            PlayerMovement();
+        }
+        else { }
+        
     }
 
     private void PlayerMovement()
     {
-        float vertInput = Input.GetAxis(verticalInputName);     //CharacterController.SimpleMove() applies deltaTime
-        float horizInput = Input.GetAxis(horizontalInputName);
+        float vertInput = Input.GetAxis(verticalInputName)* movementSpeed;     //CharacterController.SimpleMove() applies deltaTime
+        float horizInput = Input.GetAxis(horizontalInputName)* movementSpeed;
 
         Vector3 forwardMovement = transform.forward * vertInput;
         Vector3 rightMovement = transform.right * horizInput;
