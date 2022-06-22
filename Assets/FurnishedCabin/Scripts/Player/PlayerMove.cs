@@ -9,7 +9,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private string verticalInputName = "Vertical";
 
     [SerializeField] private float movementSpeed = 2f;
-    bool ischek = true; //프로퍼티로 값 가져오기
 
     private CharacterController charController;
 
@@ -21,12 +20,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if(ischek)
-        {
-            PlayerMovement();
-        }
-        else { }
-        
+            PlayerMovement(); 
     }
 
     private void PlayerMovement()
