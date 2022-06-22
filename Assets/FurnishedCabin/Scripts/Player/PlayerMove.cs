@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private string verticalInputName = "Vertical";
 
     [SerializeField] private float movementSpeed = 2f;
+    [SerializeField] private float mouseSpeed = 4f;
 
     private CharacterController charController;
 
@@ -25,8 +26,8 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerMovement()
     {
-        float vertInput = Input.GetAxis(verticalInputName) * movementSpeed;     //CharacterController.SimpleMove() applies deltaTime
-        float horizInput = Input.GetAxis(horizontalInputName) * movementSpeed;
+        float vertInput = Input.GetAxis(verticalInputName);     //CharacterController.SimpleMove() applies deltaTime
+        float horizInput = Input.GetAxis(horizontalInputName);
 
         Vector3 forwardMovement = transform.forward * vertInput;
         Vector3 rightMovement = transform.right * horizInput;
