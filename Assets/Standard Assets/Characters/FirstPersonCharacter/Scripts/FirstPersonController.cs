@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
+using System.Collections;
 
 #pragma warning disable 618, 649
 namespace UnityStandardAssets.Characters.FirstPerson
@@ -42,6 +44,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        private int hp = 100;
+        private Rigidbody rigid;
+        public Image bloodScreen;
+        public Slider hpBar;
+        public AudioClip clearSound;
+        public AudioClip damageSound;
 
         // Use this for initialization
         private void Start()
@@ -56,6 +64,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            rigid = GetComponent<Rigidbody>();
         }
 
 
@@ -82,7 +91,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir.y = 0f;
             }
-
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
@@ -259,6 +267,37 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.tag == "obstacle")
+            {
+                hp -= 10;
+                hpBar.value = hp;
+                Debug.Log(rigid);
+                Vector3 reactVec = transform.position - other.transform.position;
+                reactVec = reactVec.normalized;
+                Debug.Log(reactVec.ToString());
+                StartCoroutine(ShowBloodScreen());
+                m_AudioSource.PlayOneShot(damageSound);
+                // TODO: 물체와 충돌시 뒤로가지지 않음 addforce가 안먹음
+                // rigid.AddForce(reactVec * 1000, 0f);
+            }
+
+            if(other.tag == "goal")
+            {
+                Debug.Log("goal!!");
+                m_AudioSource.PlayOneShot(clearSound);
+
+            }
+        }
+
+        IEnumerator ShowBloodScreen()
+        {
+            bloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.3f, 0.5f));
+            yield return new WaitForSeconds(0.2f);
+            bloodScreen.color = Color.clear;
         }
     }
 }
