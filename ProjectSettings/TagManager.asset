@@ -6,13 +6,13 @@ TagManager:
   tags:
   - obstacle
   - Burn_Area
-  - goal
-  - smoke
+  - BULLET
+  - Monster
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - InteractRaycast
   - Water
   - UI
   - 
