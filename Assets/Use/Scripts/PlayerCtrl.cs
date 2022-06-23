@@ -40,7 +40,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         Look();
         Move();
-        if(gun.activeSelf == false)
+        if(gun.activeSelf == true)
         if(Input.GetMouseButtonDown(0))
         {
             items[0].Use();

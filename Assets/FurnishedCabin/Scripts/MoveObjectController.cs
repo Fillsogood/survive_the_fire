@@ -162,10 +162,10 @@ public class MoveObjectController : MonoBehaviour
 		string rtnVal;
 		if (isOpen)
 		{
-			rtnVal = "문 닫기";
+			rtnVal = "버튼E눌러서_문_닫기";
 		}else
 		{
-			rtnVal = "문 열기";
+			rtnVal = "버튼E눌러서_문_열기";
 		}
 
 		return rtnVal;
@@ -175,7 +175,7 @@ public class MoveObjectController : MonoBehaviour
 	{
 		if (showInteractMsg)  //show on-screen prompts to user for guide.
 		{
-			GUI.Label(new Rect (50,Screen.height - 50,200,50), msg,guiStyle);
+			GUI.Label(new Rect (200, Screen.height - 100,1500,750), msg,guiStyle);
 		}
 	}		
 	//End of GUI Config --------------
