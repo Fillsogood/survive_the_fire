@@ -6,6 +6,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class GameManger : MonoBehaviour
 {
+    public UIManager manager;
 
     private FirstPersonController controller;
     private CharacterController characterController;
@@ -34,12 +35,14 @@ public class GameManger : MonoBehaviour
         {
             if (controller.getHp() <= 0)
             {
+                manager.controllerstop(false);
                 gameOver = true;
                 GameOver();
             }
 
             if (controller.getGameClear())
             {
+                manager.controllerstop(false);
                 gameClear = true;
                 GameClear();
             }
