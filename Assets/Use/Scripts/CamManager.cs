@@ -32,9 +32,9 @@ public class CamManager : MonoBehaviour
         //숙였을 시 카메라 이동
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            controller.m_WalkSpeed = 1.5f;
+            controller.m_WalkSpeed = 2f;
             transform.position = Target.position;
-            characterController.height = 1.1f;
+            characterController.height = 1.4f;
         }
     }
 

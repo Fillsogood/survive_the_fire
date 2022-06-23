@@ -46,9 +46,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         private static int hp = 100;
         private bool damageTerm = true;
+        private bool gameClear = false;
         public Image bloodScreen;
         public Slider hpBar;
-        public AudioClip clearSound;
         public AudioClip damageSound;
         public float m_WalkSpeed;
 
@@ -71,6 +71,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public int getHp()
         {
             return hp;
+        }
+
+        public bool getGameClear()
+        {
+            return gameClear;
         }
 
 
@@ -284,9 +289,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (other.tag == "goal")
             {
-                Debug.Log("goal!!");
-                m_AudioSource.PlayOneShot(clearSound);
-
+                gameClear = true;
             }
         }
 
