@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     public class FirstPersonController : MonoBehaviour
     {
         [SerializeField] private bool m_IsWalking;
-        public float m_WalkSpeed;
+        
         [SerializeField] private float m_RunSpeed;
         [SerializeField][Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
@@ -44,12 +44,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-        private int hp = 100;
-        private Rigidbody rigid;
+        private static int hp = 100;
+        private bool damageTerm = true;
         public Image bloodScreen;
         public Slider hpBar;
         public AudioClip clearSound;
         public AudioClip damageSound;
+        public float m_WalkSpeed;
 
         // Use this for initialization
         private void Start()
@@ -64,7 +65,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
             m_MouseLook.Init(transform, m_Camera.transform);
-            rigid = GetComponent<Rigidbody>();
+            StartCoroutine(ContinuousTermManage());
+        }
+
+        public int getHp()
+        {
+            return hp;
         }
 
 
@@ -273,16 +279,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (other.tag == "Burn_Area")
             {
-                hp -= 10;
-                hpBar.value = hp;
-                Debug.Log(rigid);
-                Vector3 reactVec = transform.position - other.transform.position;
-                reactVec = reactVec.normalized;
-                Debug.Log(reactVec.ToString());
-                StartCoroutine(ShowBloodScreen());
-                m_AudioSource.PlayOneShot(damageSound);
-                // TODO: 물체와 충돌시 뒤로가지지 않음 addforce가 안먹음
-                // rigid.AddForce(reactVec * 1000, 0f);
+                DamgeFromObject(10);
             }
 
             if (other.tag == "goal")
@@ -293,11 +290,44 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
+        private void DamgeFromObject(int damage)
+        {
+            hp -= damage;
+            hpBar.value = hp;
+            StartCoroutine(ShowBloodScreen());
+            m_AudioSource.PlayOneShot(damageSound);
+        }
+
         IEnumerator ShowBloodScreen()
         {
             bloodScreen.color = new Color(1, 0, 0, UnityEngine.Random.Range(0.3f, 0.5f));
             yield return new WaitForSeconds(0.2f);
             bloodScreen.color = Color.clear;
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if(other.tag == "smoke" && damageTerm)
+            {
+                DamgeFromObject(2);
+                damageTerm = false;
+                StartCoroutine(WaitDamage());
+            }
+        }
+
+        IEnumerator ContinuousTermManage()
+        {
+            while(true) { 
+                yield return new WaitForSeconds(1.0f);
+                hp -= 1; // 매초 산소 빠져나감
+                hpBar.value = hp;
+            }
+        }
+
+        IEnumerator WaitDamage()
+        {
+            yield return new WaitForSeconds(1.0f);
+            damageTerm = true;
         }
     }
 }
