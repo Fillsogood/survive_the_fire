@@ -91,7 +91,7 @@ public class MoveObjectController : MonoBehaviour
 					bool isOpen = anim.GetBool(animBoolNameNum);	//need current state for message.
 					msg = getGuiMsg(isOpen);
 
-					if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonDown("Fire1"))
+					if (Input.GetKeyUp(KeyCode.E))
 					{
 						anim.enabled = true;
 						anim.SetBool(animBoolNameNum,!isOpen);
@@ -154,7 +154,7 @@ public class MoveObjectController : MonoBehaviour
 		guiStyle.fontSize = 16;
 		guiStyle.fontStyle = FontStyle.Bold;
 		guiStyle.normal.textColor = Color.white;
-		msg = "Press E/Fire1 to Open";
+		msg = "버튼E를 눌러서 열어주세요.";
 	}
 
 	private string getGuiMsg(bool isOpen)
@@ -162,10 +162,10 @@ public class MoveObjectController : MonoBehaviour
 		string rtnVal;
 		if (isOpen)
 		{
-			rtnVal = "Press E/Fire1 to Close";
+			rtnVal = "문 닫기";
 		}else
 		{
-			rtnVal = "Press E/Fire1 to Open";
+			rtnVal = "문 열기";
 		}
 
 		return rtnVal;
