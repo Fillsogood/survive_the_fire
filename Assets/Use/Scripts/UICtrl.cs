@@ -10,8 +10,6 @@ public class UICtrl : MonoBehaviour
 	public GameObject p_Fire_Extinguisher;
 	public GameObject sHW_Fire_extinguisher_01_01;
 	public GameObject gun;
-	public GameObject fire;
-	public GameObject monster;
 	void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
