@@ -11,6 +11,7 @@ public class PlayerCtrl : MonoBehaviour
     bool grounded;
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
+    public GameObject gun;
 
     int itemIndex;
     int previousItemIndex = -1;
@@ -39,6 +40,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         Look();
         Move();
+        if(gun.activeSelf == false)
         if(Input.GetMouseButtonDown(0))
         {
             items[0].Use();
