@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class MonsterCtrl : MonoBehaviour
+public class MonsterCtrl : MonoBehaviour, IDamageable
 {
     private Transform mosterTr;
     private Transform playerTr;
@@ -10,6 +10,7 @@ public class MonsterCtrl : MonoBehaviour
     private Animator anim;
     private readonly int hashTrace = Animator.StringToHash("IsTrace");
     private readonly int hashAttack = Animator.StringToHash("IsAttack");
+    
     public enum State
     {
         IDLE,
@@ -21,6 +22,9 @@ public class MonsterCtrl : MonoBehaviour
     public float traceDist = 10.0f;
     public float attackDist = 2.0f;
     public bool isDie = false;
+
+    const float maxHealth = 100f;
+    float currentHealth = maxHealth;
     void Start()
     {
         //몬스터의 Transform 할당
@@ -86,18 +90,37 @@ public class MonsterCtrl : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        //if(collision.collider.CompareTag)
-    }
-    //사거리표시는 따로 안 만듬 필요하면 만듬
-    //private void OnDrawGizmos()
-    //{
 
-    //}
 
     void Update()
     {
         
+    }
+ 
+
+    void IDamageable.TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(this.name + "_" + currentHealth);
+        if (currentHealth < 100 && currentHealth >= 60)
+        {
+            this.transform.localScale = new Vector3(2, 2, 2);
+            
+        }
+        else if (currentHealth == 20)
+        {
+            this.transform.localScale = new Vector3(1, 1, 1);
+
+        }
+        else if (currentHealth <= 0)
+        {  
+            Die();
+        }
+        else { }
+ 
+    }
+    void Die()
+    {
+        Destroy(this.gameObject);
     }
 }

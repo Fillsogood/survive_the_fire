@@ -16,10 +16,12 @@ public class PlayerCtrl : MonoBehaviour
     int itemIndex;
     int previousItemIndex = -1;
 
-    Rigidbody rb;
-
     const float maxHealth = 100f;
     float currentHealth = maxHealth;
+
+    Rigidbody rb;
+
+
 
 
 
@@ -33,18 +35,34 @@ public class PlayerCtrl : MonoBehaviour
     void Start()
     {
 
-        
+
 
     }
     void Update()
     {
         Look();
         Move();
-        if(gun.activeSelf == true)
-        if(Input.GetMouseButtonDown(0))
+        if (gun.activeSelf == true)
+            if (Input.GetMouseButtonDown(0))
+            {
+                items[0].Use();
+            }
+    }
+    private void OnTriggerEnter(Collider coll)
+    {
+        if(currentHealth>=0.0f&&coll.CompareTag("Monster"))
         {
-            items[0].Use();
+            currentHealth -= 10.0f;
+            Debug.Log($"Player hp = {currentHealth / maxHealth}");
+            if(currentHealth<=0.0f)
+            {
+                PlayerDie();
+            }
         }
+    }
+    void PlayerDie()
+    {
+        //UI로 당신은 미션에 실패하셨습니다. 다시 시작하겠습니까?
     }
     void Look()
     {
@@ -61,7 +79,7 @@ public class PlayerCtrl : MonoBehaviour
 
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
 
-        rb.angularVelocity = new Vector3(0, 0, 0); 
+        rb.angularVelocity = new Vector3(0, 0, 0);
     }
 
 
