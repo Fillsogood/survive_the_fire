@@ -77,10 +77,12 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (gun.gameObject.activeSelf == true)
         {
+            if(Input.GetMouseButtonDown(0))
+                particleObject.Play();
             if (Input.GetMouseButton(0))
             {
                 items[0].Use();
-                particleObject.Play();
+                
             }
             else if (Input.GetMouseButtonUp(0))
             {
