@@ -86,10 +86,14 @@ public class MonsterCtrl : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if(collision.collider.CompareTag)
+    }
     //사거리표시는 따로 안 만듬 필요하면 만듬
     //private void OnDrawGizmos()
     //{
-        
+
     //}
 
     void Update()
