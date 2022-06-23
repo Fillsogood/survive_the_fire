@@ -23,8 +23,8 @@ public class MonsterCtrl : MonoBehaviour, IDamageable
     public float attackDist = 2.0f;
     public bool isDie = false;
 
-    const float maxHealth = 100f;
-    float currentHealth = maxHealth;
+    
+    int currentHealth = 100;
     void Start()
     {
         //몬스터의 Transform 할당
@@ -73,7 +73,7 @@ public class MonsterCtrl : MonoBehaviour, IDamageable
             {
                 case State.IDLE:
                     agent.isStopped = true;
-                    anim.SetBool("IsTrace", false);
+                    anim.SetBool(hashTrace, false);
                     break;
                 case State.TRACE:
                     agent.SetDestination(playerTr.position);
@@ -98,7 +98,7 @@ public class MonsterCtrl : MonoBehaviour, IDamageable
     }
  
 
-    void IDamageable.TakeDamage(float damage)
+    void IDamageable.TakeDamage(int damage)
     {
         currentHealth -= damage;
         Debug.Log(this.name + "_" + currentHealth);
