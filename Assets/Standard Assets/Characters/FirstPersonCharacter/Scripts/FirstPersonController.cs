@@ -44,7 +44,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-        private static int hp = 100;
+        public static int hp = 100;
         private bool damageTerm = true;
         private bool gameClear = false;
         public Image bloodScreen;
@@ -66,6 +66,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
             m_MouseLook.Init(transform, m_Camera.transform);
             StartCoroutine(ContinuousTermManage());
+            //다시 슬라이더가 100으로 시작하게 변경 
+            hp = 100;
+            hpBar.value = 100;
         }
 
         public int getHp()
