@@ -766,6 +766,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  bloodScreen: {fileID: 0}
+  hpBar: {fileID: 0}
+  clearSound: {fileID: 0}
+  damageSound: {fileID: 0}
 --- !u!124 &1950122451
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1041,7 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1458efc92ce174797b1ba2ad6251f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMagnitude: -20
+  controller: {fileID: 0}
 --- !u!1 &2096972512
 GameObject:
   m_ObjectHideFlags: 0
