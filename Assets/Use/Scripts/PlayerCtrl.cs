@@ -19,35 +19,27 @@ public class PlayerCtrl : MonoBehaviour
     const float maxHealth = 100f;
     float currentHealth = maxHealth;
 
+    
+    public ParticleSystem particleObject; 
+
     Rigidbody rb;
-
-
-
-
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
-
-
+        
     }
     void Start()
     {
-
-
-
     }
     void Update()
     {
         Look();
         Move();
-        if (gun.activeSelf == true)
-            if (Input.GetMouseButtonDown(0))
-            {
-                items[0].Use();
-            }
+        kill();
     }
+    
+
     private void OnTriggerEnter(Collider coll)
     {
         if(currentHealth>=0.0f&&coll.CompareTag("Monster"))
@@ -81,13 +73,23 @@ public class PlayerCtrl : MonoBehaviour
 
         rb.angularVelocity = new Vector3(0, 0, 0);
     }
-
-
-    public void SetGroundedState(bool _grounded)
+    void kill()
     {
-        grounded = _grounded;
-
+        if (gun.gameObject.activeSelf == true)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                items[0].Use();
+                particleObject.Play();
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                particleObject.Stop();
+            }
+            else { }
+        }
     }
+
     private void FixedUpdate()
     {
 
