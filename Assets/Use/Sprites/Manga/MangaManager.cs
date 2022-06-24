@@ -9,6 +9,7 @@ public class MangaManager : MonoBehaviour
     [SerializeField] Image manga_Image;
     [SerializeField] Sprite[] manga;
 
+    public bool Ending;
     int cnt_manga = 1;
     int mangaCount;
     // Start is called before the first frame update
@@ -23,6 +24,11 @@ public class MangaManager : MonoBehaviour
     {
         manga_Image.sprite = manga[cnt_manga];
         if(cnt_manga<mangaCount) cnt_manga++;
+        else if(cnt_manga>=mangaCount && Ending)
+        {
+            Debug.Log("엔딩 발동");
+            Application.Quit();
+        }
         else 
         {
             gameObject.SetActive(false);

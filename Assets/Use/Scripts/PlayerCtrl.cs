@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviour
 {
@@ -12,22 +13,25 @@ public class PlayerCtrl : MonoBehaviour
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
     public GameObject gun;
+    public AudioSource audio;
+    public Slider slider;
+    private bool isDamaged = false;
 
     int itemIndex;
     int previousItemIndex = -1;
 
-    const float maxHealth = 100f;
-    float currentHealth = maxHealth;
-
-    
+    public static int currentHealth = 100;
     public ParticleSystem particleObject; 
-
     Rigidbody rb;
+
+    public UIManager manager;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        
+        manager.controllerstop(true);
+
+
     }
     void Start()
     {
@@ -42,15 +46,25 @@ public class PlayerCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider coll)
     {
-        if(currentHealth>=0.0f&&coll.CompareTag("Monster"))
+        if(currentHealth>=0&&coll.CompareTag("Monster"))
         {
-            currentHealth -= 10.0f;
-            Debug.Log($"Player hp = {currentHealth / maxHealth}");
-            if(currentHealth<=0.0f)
+            if(!isDamaged)
             {
-                PlayerDie();
+                isDamaged = true;
+                Invoke("UpdateHeath", 1.0f);
+                Debug.Log(currentHealth);
+                if (currentHealth <= 0)
+                {
+                    PlayerDie();
+                }
             }
         }
+    }
+    void UpdateHeath()
+    {
+        currentHealth -= 10;
+        slider.value = currentHealth;
+        isDamaged = false;
     }
     void PlayerDie()
     {
@@ -78,15 +92,20 @@ public class PlayerCtrl : MonoBehaviour
         if (gun.gameObject.activeSelf == true)
         {
             if(Input.GetMouseButtonDown(0))
+            {
                 particleObject.Play();
+                audio.Play();
+            }     
             if (Input.GetMouseButton(0))
             {
                 items[0].Use();
+                
                 
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 particleObject.Stop();
+                audio.Stop();
             }
             else { }
         }
