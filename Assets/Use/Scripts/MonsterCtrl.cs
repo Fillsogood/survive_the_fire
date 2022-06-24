@@ -101,7 +101,7 @@ public class MonsterCtrl : MonoBehaviour, IDamageable
     void IDamageable.TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log(this.name + "_" + currentHealth);
+        //Debug.Log(this.name + "_" + currentHealth);
         if (currentHealth < 100 && currentHealth >= 60)
         {
             this.transform.localScale = new Vector3(2, 2, 2);
@@ -121,6 +121,7 @@ public class MonsterCtrl : MonoBehaviour, IDamageable
     }
     void Die()
     {
+        GameManager.Monster_Count--;
         Destroy(this.gameObject);
     }
 }

@@ -5,6 +5,9 @@ using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
+    public static bool Stage1Clear;
+    public static bool Stage2Clear;
+
     [SerializeField] GameObject Setting_Canvas;
     [SerializeField] GameObject volumeSetting_Pannel;
     [SerializeField] FirstPersonController controller;
@@ -73,6 +76,16 @@ public class UIManager : MonoBehaviour
     //string으로 입력받는 씬이동
     public void SceneChange(string name)
     {
+        if(SceneManager.GetActiveScene().name== "ExitSchool")
+        {
+            Stage1Clear = true;
+            Debug.Log("탈출 클리어" + Stage1Clear);
+        }
+        else if(SceneManager.GetActiveScene().name== "Home")
+        {
+            Stage2Clear = true;
+            Debug.Log("홈씬 클리어" + Stage2Clear);
+        }
         SceneManager.LoadScene(name);
     }
     //숫자로 입력받는 씬이동 
@@ -104,5 +117,10 @@ public class UIManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void GoMainScene()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
