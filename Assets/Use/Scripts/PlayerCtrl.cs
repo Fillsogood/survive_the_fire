@@ -100,6 +100,7 @@ public class PlayerCtrl : MonoBehaviour
             {
                 items[0].Use();
                 
+                
             }
             else if (Input.GetMouseButtonUp(0))
             {
