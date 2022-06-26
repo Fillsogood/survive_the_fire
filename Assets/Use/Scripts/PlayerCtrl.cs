@@ -21,7 +21,7 @@ public class PlayerCtrl : MonoBehaviour
     int previousItemIndex = -1;
 
 
-    static int currentHealth = 100;
+    public static int currentHealth = 100;
 
     
     public ParticleSystem particleObject; 
